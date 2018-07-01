@@ -4,7 +4,9 @@
 
 __author__ = 'lem'
 
-KNX_NET_IP_SIGNATURE = '0610'  # typical for start KNXnetIP frame
+KNX_NET_IP_SIGNATURE = '0610'                   # typical for start KNXnet/IP frame
+KNX_BROADCAST        = '224.0.23.12:3671'       # default broadcast IP:port for KNXnet/IP
+
 
 # Description Field Frame KNX
 description_field_knx = {
