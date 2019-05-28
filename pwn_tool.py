@@ -4,4 +4,3 @@
 
 __author__ = 'lem'
 
-from knx_api import *

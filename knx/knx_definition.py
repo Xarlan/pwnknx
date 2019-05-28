@@ -4,8 +4,8 @@
 
 __author__ = 'lem'
 
-KNX_NET_IP_SIGNATURE = '0610'                   # typical for start KNXnet/IP frame
-KNX_BROADCAST        = '224.0.23.12:3671'       # default broadcast IP:port for KNXnet/IP
+KNX_NET_IP_SIGNATURE    = '0610'                   # typical for start KNXnet/IP frame
+KNX_BROADCAST_DEFAULT   = '224.0.23.12:3671'       # default broadcast IP:port for KNXnet/IP
 
 
 # Description Field Frame KNX
@@ -147,10 +147,10 @@ SERVICE_TYPE_ID_ROUTING_INDICATION            = 0x0530
 MSG_CODE_L_DATA_IND = 0x29
 MSG_CODE_L_DATA_CON = 0x2E
 MSG_CODE_L_DATA_REQ = 0x11
-MSG_CODE_L_RAW_REQ = 0x10
+MSG_CODE_L_RAW_REQ  = 0x10
 
-FLAG_ADDR_TYPE_INDIVIDUAL_ADDRESS = 0x0  # individual address ( 7 bit N_PDU, 5 Octet)
-FLAG_ADDR_TYPE_GROUP_ADDRESS = 0x1  # group address      ( 7 bit N_PDU, 5 Octet)
+FLAG_ADDR_TYPE_INDIVIDUAL_ADDRESS   = 0x0  # individual address ( 7 bit N_PDU, 5 Octet)
+FLAG_ADDR_TYPE_GROUP_ADDRESS        = 0x1  # group address      ( 7 bit N_PDU, 5 Octet)
 
 #####################################
 #       Flag control field TP       #
@@ -165,10 +165,10 @@ CTRL_FIELD_TP = 0x90    # 10R1 PP00
                         # 11 - Normal mode low priority
 
 
-FLAG_CTR_FIELD_TP_NOT_REPEAT_T = 0x20
-FLAG_CTR_FIELD_TP_ALARM = 0x8
-FLAG_CTR_FIELD_TP_HIGH_PRIOR = 0x4
-FLAG_CTR_FIELD_TP_LOW_PRIOR = 0xC
+FLAG_CTR_FIELD_TP_NOT_REPEAT_T  = 0x20
+FLAG_CTR_FIELD_TP_ALARM         = 0x8
+FLAG_CTR_FIELD_TP_HIGH_PRIOR    = 0x4
+FLAG_CTR_FIELD_TP_LOW_PRIOR     = 0xC
 
 #####################################
 #       Flag control field IP       #

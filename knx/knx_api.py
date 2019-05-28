@@ -6,7 +6,7 @@ __author__ = 'lem'
 
 import socket
 
-import knxcore
+from knx import knx_core
 
 def sniff(type_medium=None, broadcast=None, timeout=45):
     """
@@ -25,7 +25,7 @@ def sniff(type_medium=None, broadcast=None, timeout=45):
         pass
 
     elif type_medium == 'ip':
-        node = knxcore.FrameKnxNetIp(broadcast)
+        node = knx_core.FrameKnxNetIp(broadcast)
         node.udp_socket.settimeout(timeout)
 
     elif type_medium == 'pl':
@@ -37,8 +37,8 @@ def sniff(type_medium=None, broadcast=None, timeout=45):
     else:
         raise Warning("Unknown type of medium")
 
-    print "\nStart sniff traffic"
-    print "Timeout [sec] = ", timeout
+    print("\nStart sniff traffic")
+    print("Timeout [sec] = ", timeout)
 
     while True:
 
@@ -51,6 +51,6 @@ def sniff(type_medium=None, broadcast=None, timeout=45):
         else:
             node.show_pkt_knx_ip()
 
-    print "\nEnded by a timeout"
+    print("\nEnded by a timeout")
     del node
 

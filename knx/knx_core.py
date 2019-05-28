@@ -7,7 +7,7 @@ __author__ = 'lem'
 import struct
 import socket
 
-import knxdef
+from knx import knx_definition
 
 
 ###########################################################
@@ -104,8 +104,8 @@ class FrameKnxTp(object):
                 frame_knx += struct.pack('B', (int(self.dst_addr[0]) << 3) | ((int(self.dst_addr[1]) & 0x700) >> 8))
 
             except struct.error:
-                print "Wrong dst address"
-                print "Dst addr should be format x.y, where x=[0..15], y=[0..2047]"
+                print("Wrong dst address")
+                print("Dst addr should be format x.y, where x=[0..15], y=[0..2047]")
                 raise KnxException("[knx-knx]: Dst addr should be format x.y, where x=[0..15], y=[0..2047]")
 
             else:
@@ -113,7 +113,7 @@ class FrameKnxTp(object):
                     frame_knx += struct.pack('B', int(self.dst_addr[1]) & 0xFF)
 
                 except struct.error:
-                    print "Wrong dst addr"
+                    print("Wrong dst addr")
                     raise KnxException("[knx-knx]: Dst addr should be format x.y, where x=[0..15], y=[0..2047]")
 
         # Format addr x.y.z
@@ -186,7 +186,7 @@ class FrameKnxTp(object):
                 frame_knx += struct.pack('%dB' % len_data, *self.Data)  # Octet 8 ... Data
                 return frame_knx
 
-            elif self.APCI == knxdef.APCI_USER_MESSAGE:
+            elif self.APCI == knx_definition.APCI_USER_MESSAGE:
                 frame_knx += struct.pack('B', self.APCI & 0xFF)
                 frame_knx += struct.pack('%dB' % len(self.Data), *self.Data)
                 return frame_knx
@@ -398,22 +398,22 @@ class FrameKnxTp(object):
         print "       Value of the routing counter (NPCI): ", hex(self.NPCI)
         print "       Len KNX TP frame:                    ", hex(self.len_frame_knx_tp)
         print "       TPCI code:                           ", hex(self.TPCI)
-        print "                 %s" % knxdef.description_field_knx['TPCI'][self.TPCI]
+        print "                 %s" % knx_definition.description_field_knx['TPCI'][self.TPCI]
 
         if self.TPCI_seq_num is not None:
             print "       TPCI sequence number (NDP, NCD):     ", hex(self.TPCI_seq_num)
 
         if self.TPCI == 2 or self.TPCI == 3:
             print "       APDU code:                           ", hex(self.APDU)
-            print "                  %s" % knxdef.description_field_knx['APDU'][self.APDU]
+            print "                  %s" % knx_definition.description_field_knx['APDU'][self.APDU]
 
         if self.APCI is not None:
             print "       APCI code:                           ", hex(self.APCI)
-            print "                  %s" % knxdef.description_field_knx['APCI'][self.APCI]
+            print "                  %s" % knx_definition.description_field_knx['APCI'][self.APCI]
 
         if self.APCI_extBit is not None:
             print "       APCI ext Bit code:                   ", hex(self.APCI_extBit)
-            print "                         %s" % knxdef.description_field_knx['APCI_extBit'][self.APCI_extBit]
+            print "                         %s" % knx_definition.description_field_knx['APCI_extBit'][self.APCI_extBit]
 
         if len(self.Data) > 0:
             print "       Data:                                ", self.Data
@@ -461,7 +461,7 @@ class FrameKnxNetIp(FrameKnxTp):
         self.ctrl_field_ip      = 0
 
         if knx_broadcast is None:
-            knx_broadcast = knxdef.KNX_BROADCAST
+            knx_broadcast = knx_definition.KNX_BROADCAST
 
         host, port = knx_broadcast.split(':')                               # configure socket to receive broadcast msg
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
@@ -695,7 +695,7 @@ class FrameKnxNetIp(FrameKnxTp):
         print "       Total Length:            ", hex(self.len_frame_knx_ip)
         print "cEMI Message Format "
         print "       Message Code:                        ", hex(self.message_code)
-        print "                    %s" % knxdef.description_field_knx['MsgCode'][self.message_code]
+        print "                    %s" % knx_definition.description_field_knx['MsgCode'][self.message_code]
         print "       Additional Info Length:              ", hex(self.add_info_len)
         print "       Control Field IP:                    ", hex(self.ctrl_field_ip)
         self.show_info_pkt_knx_tp(False)
@@ -710,8 +710,8 @@ class FrameKnxNetIp(FrameKnxTp):
 
         self.header_length = 0x6
         self.protocol_version = 0x10
-        self.service_type_id = knxdef.SERVICE_TYPE_ID_ROUTING_INDICATION
-        self.message_code = knxdef.MSG_CODE_L_DATA_IND
+        self.service_type_id = knx_definition.SERVICE_TYPE_ID_ROUTING_INDICATION
+        self.message_code = knx_definition.MSG_CODE_L_DATA_IND
         self.add_info_len = 0
         self.ctrl_field_ip = ctrl_ip
 
@@ -748,7 +748,7 @@ class FrameKnxNetIp(FrameKnxTp):
         """
         if hasattr(eth_pkt, 'load') and \
                 eth_pkt.load and \
-                eth_pkt.load.encode('hex').startswith(knxdef.KNX_NET_IP_SIGNATURE):
+                eth_pkt.load.encode('hex').startswith(knx_definition.KNX_NET_IP_SIGNATURE):
             self._decode_frame_knx_ip(eth_pkt.load)
         else:
             raise KnxException('This packet is not KNXnetIP ')
